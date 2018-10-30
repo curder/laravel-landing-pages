@@ -1,6 +1,10 @@
 ## Laravel Landing Pages Package
 
+## Thanks
 
+* [Laravel-Auto-Page](https://github.com/Mombuyish/Laravel-Auto-Page)
+
+* [laravel-pages](https://github.com/Jeroen-G/laravel-pages)
 
 ## Requirements
 

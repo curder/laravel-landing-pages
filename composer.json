@@ -1,0 +1,43 @@
+{
+    "name": "curder/laravel-landing-page",
+    "description": "Auto load static page and generate routes for laravel.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "curder",
+            "email": "curder@foxmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7",
+        "illuminate/support": "5.*",
+        "illuminate/view": "5.*",
+        "illuminate/config": "5.*",
+        "illuminate/routing": "5.*",
+        "illuminate/http": "5.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.7",
+        "phpunit/phpunit": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Curder\\LandingPages\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Curder\\LandingPages\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "component": "package",
+        "laravel": {
+            "providers": [
+                "Curder\\LandingPages\\LandingPagesServiceProvider"
+            ]
+        }
+    }
+}

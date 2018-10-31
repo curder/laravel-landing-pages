@@ -43,6 +43,17 @@ php artisan vendor:publish --provider="Curder\LandingPages\LandingPagesServicePr
 
 修改应用根目录下的 `config/landing-pages.php` 中对应的参数即可
 
+发布路由
+
+```
+php artisan landing-pages:router-make
+```
+
+执行完上面的命令后将在`routes/web.php`中添加一条路由：
+
+```
+Route::get('{slug}/{one?}/{two?}/{three?}/{four?}/{five?}', '\Curder\LandingPages\Http\Controllers\LandingPagesController@show');
+```
 
 ## License
 

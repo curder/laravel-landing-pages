@@ -65,19 +65,19 @@ class LandingPagesController extends Controller
     }
 
     /**
-     * Gets all the data of the page from the database, based on the slug.
+     * Gets all the data of the page from the database, based on the path.
      *
-     * @param string $slug    the slug to search for in the database
+     * @param string $path    the path to search for in the database
      * @param bool   $trashed Include trashed (soft deleted) pages?
      *
      * @return array the data such as title, content and publishing date in an array
      **/
-    public function getPageBy($slug, $trashed = false)
+    public function getPageBy($path, $trashed = false)
     {
         if ($trashed) {
-            return LandingPage::withTrashed()->where('slug', $slug)->first();
+            return LandingPage::withTrashed()->where('path', $path)->first();
         }
 
-        return LandingPage::where('slug', $slug)->first();
+        return LandingPage::where('path', $path)->first();
     }
 }

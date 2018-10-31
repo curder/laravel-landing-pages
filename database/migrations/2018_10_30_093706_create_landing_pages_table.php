@@ -8,8 +8,6 @@ class CreateLandingPagesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -20,8 +18,8 @@ class CreateLandingPagesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('body');
-            $table->string('slug')->unique();
-            $table->string('template_path');
+            $table->string('path')->unique();
+            $table->string('template')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -29,8 +27,6 @@ class CreateLandingPagesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

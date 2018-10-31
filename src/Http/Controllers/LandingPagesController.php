@@ -35,7 +35,7 @@ class LandingPagesController extends Controller
             $page = $this->getPageBy($path);
             $template = view()->exists($page->template) ? $page->template : config('landing-page.database.default_template');
 
-            return  view($template, $page);
+            return view($template, $page);
         }
 
         if (view()->exists($whoops_page)) {
@@ -55,13 +55,13 @@ class LandingPagesController extends Controller
     /**
      * Checks if a page exists in the database.
      *
-     * @param string $slug the slug to search for in the database
+     * @param string $path the path to search for in the database
      *
      * @return bool returns true if the page exists, false otherwise
      **/
-    public function exists($slug)
+    public function exists($path)
     {
-        return (bool) LandingPage::where('slug', $slug)->count();
+        return (bool) LandingPage::where('path', $path)->count();
     }
 
     /**

@@ -1,5 +1,8 @@
 ## Laravel Landing Pages Package
 
+项目支持对推广页面的本地模版管理和数据库配置管理通用解决办法。
+
+
 ## 感谢
 
 * [Laravel-Auto-Page](https://github.com/Mombuyish/Laravel-Auto-Page)

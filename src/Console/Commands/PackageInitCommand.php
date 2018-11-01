@@ -76,10 +76,13 @@ class PackageInitCommand extends Command
                 }
             }
 
-            copy(
-                __DIR__.'/stubs/make/views/'.str_replace('.', '/', $key).'.stub',
-                $view
-            );
+            $base_file = __DIR__.'/stubs/make/views/'.str_replace('.', '/', $key).'.stub';
+
+            if (file_exists($base_file)) {
+                copy($base_file, $view);
+            } else {
+                $this->alert("Base template：${base_file} does not eixist. Please create {$view} by yourself, Thanks!!!");
+            }
         }
     }
 }

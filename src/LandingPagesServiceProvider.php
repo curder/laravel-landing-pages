@@ -4,7 +4,7 @@ namespace Curder\LandingPages;
 
 use App\Providers\RouteServiceProvider;
 use Curder\LandingPages\Facades\LandingPages;
-use Curder\LandingPages\Console\Commands\RouterMakeCommand;
+use Curder\LandingPages\Console\Commands\PackageInitCommand;
 
 /**
  * Class LandingPageServiceProvider.
@@ -22,7 +22,7 @@ class LandingPagesServiceProvider extends RouteServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                RouterMakeCommand::class,
+                PackageInitCommand::class,
             ]);
         }
     }

@@ -29,6 +29,11 @@ class PackageInitCommand extends Command
         parent::__construct();
     }
 
+    protected $views = [
+        'www/example.stub' => 'landing-pages/www/example.blade.php',
+        'mobile/example.stub' => 'landing-pages/mobile/example.blade.php',
+    ];
+
     /**
      * Execute the console command.
      *
@@ -42,7 +47,7 @@ class PackageInitCommand extends Command
 
         file_put_contents(
             base_path('routes/web.php'),
-            file_get_contents(__DIR__.'/stubs/make/routes.stub'),
+            file_get_contents(__DIR__.'/stubs/make/routes/web.stub'),
             FILE_APPEND
         );
 
@@ -54,11 +59,11 @@ class PackageInitCommand extends Command
      */
     protected function createDirectories()
     {
-        if (!is_dir($directory = resource_path('views/www'))) {
+        if (!is_dir($directory = resource_path('views/landing-pages/www'))) {
             mkdir($directory, 0755, true);
         }
 
-        if (!is_dir($directory = resource_path('views/mobile'))) {
+        if (!is_dir($directory = resource_path('views/landing-pages/mobile'))) {
             mkdir($directory, 0755, true);
         }
     }
@@ -68,21 +73,13 @@ class PackageInitCommand extends Command
      */
     protected function exportViews()
     {
-        $views = config('landing-pages.database.templates');
-        foreach ($views as $key => $value) {
+        foreach ($this->views as $key => $value) {
             if (file_exists($view = resource_path('views/'.$value)) && !$this->option('force')) {
                 if (!$this->confirm("The [{$value}] view already exists. Do you want to replace it?")) {
                     continue;
                 }
             }
-
-            $base_file = __DIR__.'/stubs/make/views/example.stub';
-
-            if (file_exists($base_file)) {
-                copy($base_file, $view);
-            } else {
-                $this->alert("Base template：${base_file} does not eixist. Please create {$view} by yourself, Thanks!!!");
-            }
+            copy(__DIR__.'/stubs/make/views/'.$key, $view);
         }
     }
 }

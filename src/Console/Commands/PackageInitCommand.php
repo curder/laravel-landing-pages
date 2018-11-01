@@ -37,14 +37,16 @@ class PackageInitCommand extends Command
     public function handle()
     {
         $this->createDirectories();
+
         $this->exportViews();
+
         file_put_contents(
             base_path('routes/web.php'),
             file_get_contents(__DIR__.'/stubs/make/routes.stub'),
             FILE_APPEND
         );
 
-        $this->info('Landing page Router register successfully.');
+        $this->info('Landing pages generated successfully.');
     }
 
     /**

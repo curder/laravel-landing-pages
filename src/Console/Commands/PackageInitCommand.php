@@ -76,7 +76,7 @@ class PackageInitCommand extends Command
                 }
             }
 
-            $base_file = __DIR__.'/stubs/make/views/'.str_replace('.', '/', $key).'.stub';
+            $base_file = __DIR__.'/stubs/make/views/example.stub';
 
             if (file_exists($base_file)) {
                 copy($base_file, $view);

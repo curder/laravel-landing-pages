@@ -22,7 +22,7 @@ class LandingPagesServiceProvider extends RouteServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-            PackageInitCommand::class,
+                PackageInitCommand::class,
             ]);
         }
     }

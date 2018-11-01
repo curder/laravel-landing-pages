@@ -16,6 +16,6 @@ return [
         'connection' => '',
         'landing_pages_table' => 'landing_pages',
         'default_template' => '',
-        'templates' => '',
+        'templates' => [],
     ],
 ];

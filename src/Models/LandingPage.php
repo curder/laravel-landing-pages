@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string template_path
  *
- * @method selectTemplatePathOptions
- * @method defaultTemplatePath
+ * @static selectTemplatePathOptions()
+ * @static defaultTemplatePath()
  */
 class LandingPage extends Model
 {

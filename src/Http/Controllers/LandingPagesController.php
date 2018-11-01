@@ -29,10 +29,10 @@ class LandingPagesController extends Controller
             return view($page);
         }
 
-        $path = $this->getUri();
-        if ($this->exists($path)) {
+        $uri = $this->getUri();
+        if ($this->exists($uri)) {
             /** @var LandingPage $page */
-            $page = $this->getPageBy($path);
+            $page = $this->getPageBy($uri);
             $template = view()->exists($page->template) ? $page->template : config('landing-pages.database.default_template');
 
             return view($template, compact('page'));
@@ -55,29 +55,29 @@ class LandingPagesController extends Controller
     /**
      * Checks if a page exists in the database.
      *
-     * @param string $path the path to search for in the database
+     * @param string $uri the uri to search for in the database
      *
      * @return bool returns true if the page exists, false otherwise
      **/
-    public function exists($path)
+    public function exists($uri)
     {
-        return (bool) LandingPage::where('path', $path)->count();
+        return (bool) LandingPage::where('uri', $uri)->count();
     }
 
     /**
-     * Gets all the data of the page from the database, based on the path.
+     * Gets all the data of the page from the database, based on the uri.
      *
-     * @param string $path    the path to search for in the database
+     * @param string $uri     the uri to search for in the database
      * @param bool   $trashed Include trashed (soft deleted) pages?
      *
      * @return array the data such as title, content and publishing date in an array
      **/
-    public function getPageBy($path, $trashed = false)
+    public function getPageBy($uri, $trashed = false)
     {
         if ($trashed) {
-            return LandingPage::withTrashed()->where('path', $path)->first();
+            return LandingPage::withTrashed()->where('uri', $uri)->first();
         }
 
-        return LandingPage::where('path', $path)->first();
+        return LandingPage::where('uri', $uri)->first();
     }
 }

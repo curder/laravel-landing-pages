@@ -18,7 +18,7 @@ class CreateLandingPagesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('body');
-            $table->string('path')->unique();
+            $table->string('uri')->unique();
             $table->string('template')->nullable();
             $table->softDeletes();
             $table->timestamps();

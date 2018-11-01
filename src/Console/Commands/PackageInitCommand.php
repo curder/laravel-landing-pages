@@ -11,7 +11,8 @@ class PackageInitCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'landing-page:init';
+    protected $signature = 'landing-page:init
+                        {--force : Overwrite existing views by default}';
 
     /**
      * The console command description.
@@ -19,16 +20,6 @@ class PackageInitCommand extends Command
      * @var string
      */
     protected $description = 'Make landing pages router and example template views.';
-
-    /**
-     * The views that need to be exported.
-     *
-     * @var array
-     */
-    protected $views = [
-        'www/example.stub' => 'www/example.blade.php',
-        'mobile/example.stub' => 'mobile/example.blade.php',
-    ];
 
     /**
      * Create a new command instance.
@@ -75,7 +66,8 @@ class PackageInitCommand extends Command
      */
     protected function exportViews()
     {
-        foreach ($this->views as $key => $value) {
+        $views = config('landing-pages.database.templates');
+        foreach ($views as $key => $value) {
             if (file_exists($view = resource_path('views/'.$value)) && !$this->option('force')) {
                 if (!$this->confirm("The [{$value}] view already exists. Do you want to replace it?")) {
                     continue;
@@ -83,7 +75,7 @@ class PackageInitCommand extends Command
             }
 
             copy(
-                __DIR__.'/stubs/make/views/'.$key,
+                __DIR__.'/stubs/make/views/'.str_replace('.', '/', $key).'.stub',
                 $view
             );
         }

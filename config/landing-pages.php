@@ -15,10 +15,10 @@ return [
     'database' => [
         'connection' => '',
         'landing_pages_table' => 'landing_pages',
-        'default_template' => 'landing-page::home',
+        'default_template' => 'www.example',
         'templates' => [
-            'landing-page::home' => 'home/pages/landing-page.blade.php',
-            'landing-page::mobile' => 'mobile/pages/landing-page.blade.php',
+            'www.example' => 'www/example.blade.php',
+            'mobile.example' => 'mobile/example.blade.php',
         ],
     ],
 ];

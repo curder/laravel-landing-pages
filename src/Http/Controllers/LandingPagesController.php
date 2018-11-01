@@ -35,7 +35,7 @@ class LandingPagesController extends Controller
             $page = $this->getPageBy($path);
             $template = view()->exists($page->template) ? $page->template : config('landing-page.database.default_template');
 
-            return view($template, $page);
+            return view($template, compact('page'));
         }
 
         if (view()->exists($whoops_page)) {

@@ -15,8 +15,8 @@ class LandingPagesController extends Controller
      */
     public function show($slug, ...$args)
     {
-        $prefix = config('landing-page.prefix') ?? 'pages';
-        $default = config('landing-page.whoops') ?? 'whoops';
+        $prefix = config('landing-pages.prefix') ?? 'pages';
+        $default = config('landing-pages.whoops') ?? 'whoops';
         $args = collect($args)->map(function ($item) use ($args) {
             return count($args) ? '.'.$item : '';
         })->implode('');
@@ -33,7 +33,7 @@ class LandingPagesController extends Controller
         if ($this->exists($path)) {
             /** @var LandingPage $page */
             $page = $this->getPageBy($path);
-            $template = view()->exists($page->template) ? $page->template : config('landing-page.database.default_template');
+            $template = view()->exists($page->template) ? $page->template : config('landing-pages.database.default_template');
 
             return view($template, compact('page'));
         }

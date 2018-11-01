@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class LandingPage.
  *
  * @property string template_path
+ *
+ * @method selectTemplatePathOptions
+ * @method defaultTemplatePath
  */
 class LandingPage extends Model
 {

@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class LandingPage
+ * Class LandingPage.
  *
  * @property string template_path
- * @package Curder\LandingPages\Models
  */
 class LandingPage extends Model
 {
@@ -29,5 +28,21 @@ class LandingPage extends Model
         $this->setTable(config('landing-pages.database.landing_pages_table'));
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    public static function selectTemplatePathOptions()
+    {
+        return config('landing-pages.database.templates');
+    }
+
+    /**
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    public static function defaultTemplatePath()
+    {
+        return config('landing-pages.database.default_template');
     }
 }

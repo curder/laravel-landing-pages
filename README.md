@@ -46,7 +46,7 @@ php artisan vendor:publish --provider="Curder\LandingPages\LandingPagesServicePr
 发布路由
 
 ```
-php artisan landing-pages:router-make
+php artisan landing-page:init
 ```
 
 执行完上面的命令后将在`routes/web.php`中添加一条路由：

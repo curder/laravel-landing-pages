@@ -4,21 +4,21 @@ namespace Curder\LandingPages\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class RouterMakeCommand extends Command
+class PackageInitCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'landing-pages:router-make';
+    protected $signature = 'landing-page:init';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Mark landing pages router.';
+    protected $description = 'Make landing pages router and example template views.';
 
     /**
      * The views that need to be exported.

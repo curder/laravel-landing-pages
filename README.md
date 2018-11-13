@@ -59,8 +59,8 @@ php artisan migrate
 
 ```
 namespace Curder\LandingPages\Models;
-LandingPage::forceCreate(['title' => 'test www title.', 'body' => 'test www body.', 'path' => 'www/example', 'template' => 'landing-pages.www.example']);
-LandingPage::forceCreate(['title' => 'test mobile title.', 'body' => 'test mobile body.', 'path' => 'mobile/example', 'template' => 'landing-pages.mobile.example']);
+LandingPage::forceCreate(['title' => 'test www title.', 'body' => 'test www body.', 'uri' => 'www/example', 'template' => 'landing-pages.www.example']);
+LandingPage::forceCreate(['title' => 'test mobile title.', 'body' => 'test mobile body.', 'uri' => 'mobile/example', 'template' => 'landing-pages.mobile.example']);
 ```
 
 

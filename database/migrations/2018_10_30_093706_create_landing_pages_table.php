@@ -31,7 +31,7 @@ class CreateLandingPagesTable extends Migration
     public function down()
     {
         $connection = config('admin.database.connection') ?: config('database.default');
-
-        Schema::connection($connection)->dropIfExists('landing_pages');
+        $table_name = config('landing-pages.database.landing_pages_table');
+        Schema::connection($connection)->dropIfExists($table_name);
     }
 }

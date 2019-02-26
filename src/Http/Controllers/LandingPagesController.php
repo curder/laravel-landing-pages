@@ -23,7 +23,8 @@ class LandingPagesController extends Controller
 
         $combine = $prefix.'.'.$slug;
         $whoops_page = empty($args) ? pathinfo($combine, PATHINFO_FILENAME).'.'.$default : $combine.pathinfo($args, PATHINFO_FILENAME).'.'.$default;
-        $page = $combine.$args;
+
+	$page = rtrim(rtrim($combine.$args, config('landing-pages.url_html_suffix')), '.'); // 定位页面，如果存在后缀需要去除
 
         if (view()->exists($page)) {
             return view($page);

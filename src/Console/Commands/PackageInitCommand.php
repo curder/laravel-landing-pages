@@ -3,6 +3,7 @@
 namespace Curder\LandingPages\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class PackageInitCommand extends Command
 {
@@ -20,14 +21,6 @@ class PackageInitCommand extends Command
      * @var string
      */
     protected $description = 'Make landing pages router and example template views.';
-
-    /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     protected $views = [
         'www/example.stub' => 'landing-pages/www/example.blade.php',
@@ -52,26 +45,32 @@ class PackageInitCommand extends Command
         );
 
         $this->info('Landing pages generated successfully.');
+
+        return Command::SUCCESS;
     }
 
     /**
      * Create the directories for the files.
      */
-    protected function createDirectories()
+    protected function createDirectories() : void
     {
         if (!is_dir($directory = resource_path('views/landing-pages/www'))) {
-            mkdir($directory, 0755, true);
+            if (!mkdir($directory, 0755, true) && !is_dir($directory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
+            }
         }
 
         if (!is_dir($directory = resource_path('views/landing-pages/mobile'))) {
-            mkdir($directory, 0755, true);
+            if (!mkdir($directory, 0755, true) && !is_dir($directory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
+            }
         }
     }
 
     /**
      * Export the authentication views.
      */
-    protected function exportViews()
+    protected function exportViews() : void
     {
         foreach ($this->views as $key => $value) {
             if (file_exists($view = resource_path('views/'.$value)) && !$this->option('force')) {

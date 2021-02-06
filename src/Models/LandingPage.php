@@ -2,6 +2,7 @@
 
 namespace Curder\LandingPages\Models;
 
+use Illuminate\Config\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class LandingPage.
  *
  * @property string template_path
+ * @property string template
  *
  * @static selectTemplatePathOptions()
  * @static defaultTemplatePath()
@@ -36,7 +38,7 @@ class LandingPage extends Model
     /**
      * @return \Illuminate\Config\Repository|mixed
      */
-    public static function selectTemplatePathOptions()
+    public static function selectTemplatePathOptions() : Repository
     {
         return config('landing-pages.database.templates');
     }
@@ -44,7 +46,7 @@ class LandingPage extends Model
     /**
      * @return \Illuminate\Config\Repository|mixed
      */
-    public static function defaultTemplatePath()
+    public static function defaultTemplatePath() : Repository
     {
         return config('landing-pages.database.default_template');
     }

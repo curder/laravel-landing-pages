@@ -2,34 +2,42 @@
 
 namespace Curder\LandingPages\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
+use Illuminate\Database\Eloquent\Builder;
 use Curder\LandingPages\Models\LandingPage;
 
+/**
+ * Class LandingPagesController
+ *
+ * @package Curder\LandingPages\Http\Controllers
+ */
 class LandingPagesController extends Controller
 {
     /**
-     * @param string $slug
-     * @param array  $args
+     * @param  string  $slug
+     * @param  array  $args
      *
      * @return mixed
      */
-    public function show($slug, ...$args)
+    public function show(string $slug, ...$args)
     {
         $prefix = config('landing-pages.prefix') ?? 'pages';
         $default = config('landing-pages.whoops') ?? 'whoops';
-        $args = collect($args)->map(function ($item) use ($args) {
+        $string = collect($args)->map(function ($item) use ($args) {
             return count($args) ? '.'.$item : '';
         })->implode('');
 
         $combine = $prefix.'.'.$slug;
-        $whoops_page = empty($args) ? pathinfo($combine, PATHINFO_FILENAME).'.'.$default : $combine.pathinfo($args, PATHINFO_FILENAME).'.'.$default;
+        $whoops_page = empty($args) ? pathinfo($combine, PATHINFO_FILENAME).'.'.$default : $combine.pathinfo($string, PATHINFO_FILENAME).'.'.$default;
 
-	$page = rtrim(rtrim($combine.$args, config('landing-pages.url_html_suffix')), '.'); // 定位页面，如果存在后缀需要去除
+        $page = rtrim(rtrim($combine.$args, config('landing-pages.url_html_suffix')), '.'); // 定位页面，如果存在后缀需要去除
 
+        // 自定义视图
         if (view()->exists($page)) {
             return view($page);
         }
 
+        // 从数据库获取数据
         $uri = $this->getUri();
         if ($this->exists($uri)) {
             /** @var LandingPage $page */
@@ -48,9 +56,9 @@ class LandingPagesController extends Controller
     /**
      * @return string
      */
-    protected function getUri()
+    protected function getUri() : string
     {
-        return request()->path();
+        return optional(request())->path();
     }
 
     /**
@@ -60,7 +68,7 @@ class LandingPagesController extends Controller
      *
      * @return bool returns true if the page exists, false otherwise
      **/
-    public function exists($uri)
+    public function exists(string $uri) : bool
     {
         return (bool) LandingPage::where('uri', $uri)->count();
     }
@@ -71,9 +79,9 @@ class LandingPagesController extends Controller
      * @param string $uri     the uri to search for in the database
      * @param bool   $trashed Include trashed (soft deleted) pages?
      *
-     * @return array the data such as title, content and publishing date in an array
+     * @return array|LandingPage|Builder
      **/
-    public function getPageBy($uri, $trashed = false)
+    public function getPageBy(string $uri, $trashed = false)
     {
         if ($trashed) {
             return LandingPage::withTrashed()->where('uri', $uri)->first();

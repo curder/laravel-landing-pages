@@ -28,9 +28,9 @@ class LandingPagesController extends Controller
         })->implode('');
 
         $combine = $prefix.'.'.$slug;
-        $whoops_page = empty($args) ? pathinfo($combine, PATHINFO_FILENAME).'.'.$default : $combine.pathinfo($string, PATHINFO_FILENAME).'.'.$default;
+        $whoops_page = empty($string) ? pathinfo($combine, PATHINFO_FILENAME).'.'.$default : $combine.pathinfo($string, PATHINFO_FILENAME).'.'.$default;
 
-        $page = rtrim(rtrim($combine.$args, config('landing-pages.url_html_suffix')), '.'); // 定位页面，如果存在后缀需要去除
+        $page = rtrim(rtrim($combine.$string, config('landing-pages.url_html_suffix')), '.'); // 定位页面，如果存在后缀需要去除
 
         // 自定义视图
         if (view()->exists($page)) {

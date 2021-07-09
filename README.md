@@ -20,7 +20,7 @@
 ## 安装
 
 ```
-composer require "curder/laravel-landing-page:1.*"
+composer require "curder/laravel-landing-page:^3.0"
 ```
 
 ## 配置

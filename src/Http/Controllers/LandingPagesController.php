@@ -34,8 +34,11 @@ class LandingPagesController extends Controller
 
         // 自定义视图
         if (view()->exists($pageUri)) {
-            // 尝试数据库数据
-            $pageModel = $this->exists($uri) ? $this->getPageBy($uri) : new LandingPage;
+            $pageModel = new LandingPage;
+            if (method_exists($this, 'tryExists') && method_exists($this, 'tryGetPageBy')) {
+                // 尝试数据库数据
+                $pageModel = $this->tryExists($uri) ? $this->tryGetPageBy($uri) : new LandingPage;
+            }
 
             return view($pageUri)->with('page', $pageModel);
         }

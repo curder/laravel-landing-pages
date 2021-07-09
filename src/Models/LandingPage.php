@@ -36,17 +36,17 @@ class LandingPage extends Model
     }
 
     /**
-     * @return \Illuminate\Config\Repository|mixed
+     * @return array
      */
-    public static function selectTemplatePathOptions() : Repository
+    public static function selectTemplatePathOptions() : array
     {
         return config('landing-pages.database.templates');
     }
 
     /**
-     * @return \Illuminate\Config\Repository|mixed
+     * @return string
      */
-    public static function defaultTemplatePath() : Repository
+    public static function defaultTemplatePath() : string
     {
         return config('landing-pages.database.default_template');
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Curder\LandingPages\Http\Controllers;
 
 use Illuminate\Routing\Controller;
@@ -21,27 +20,30 @@ class LandingPagesController extends Controller
      */
     public function show(string $slug, ...$args)
     {
-        $prefix = config('landing-pages.prefix') ?? 'pages';
-        $default = config('landing-pages.whoops') ?? 'whoops';
-        $string = collect($args)->map(function ($item) use ($args) {
+        $prefix      = config('landing-pages.prefix') ?? 'pages';
+        $default     = config('landing-pages.whoops') ?? 'whoops';
+        $string      = collect($args)->map(function ($item) use ($args) {
             return count($args) ? '.'.$item : '';
         })->implode('');
+        $combine     = $prefix.'.'.$slug;
+        $whoops_page = empty($string) ? pathinfo($combine, PATHINFO_FILENAME).'.'.$default : $combine.pathinfo($string,
+                PATHINFO_FILENAME).'.'.$default;
+        $pageUri        = rtrim(rtrim($combine.$string, config('landing-pages.url_html_suffix')), '.'); // 定位页面，如果存在后缀需要去除
 
-        $combine = $prefix.'.'.$slug;
-        $whoops_page = empty($string) ? pathinfo($combine, PATHINFO_FILENAME).'.'.$default : $combine.pathinfo($string, PATHINFO_FILENAME).'.'.$default;
-
-        $page = rtrim(rtrim($combine.$string, config('landing-pages.url_html_suffix')), '.'); // 定位页面，如果存在后缀需要去除
+        $uri = $this->getUri();
 
         // 自定义视图
-        if (view()->exists($page)) {
-            return view($page);
+        if (view()->exists($pageUri)) {
+            // 尝试数据库数据
+            $pageModel = $this->exists($uri) ? $this->getPageBy($uri) : new LandingPage;
+
+            return view($pageUri)->with('page', $pageModel);
         }
 
         // 从数据库获取数据
-        $uri = $this->getUri();
         if ($this->exists($uri)) {
             /** @var LandingPage $page */
-            $page = $this->getPageBy($uri);
+            $page     = $this->getPageBy($uri);
             $template = view()->exists($page->template) ? $page->template : config('landing-pages.database.default_template');
 
             return view($template, compact('page'));
@@ -52,7 +54,6 @@ class LandingPagesController extends Controller
         }
         abort(404);
     }
-
     /**
      * @return string
      */
@@ -60,11 +61,10 @@ class LandingPagesController extends Controller
     {
         return optional(request())->path();
     }
-
     /**
      * Checks if a page exists in the database.
      *
-     * @param string $uri the uri to search for in the database
+     * @param  string  $uri  the uri to search for in the database
      *
      * @return bool returns true if the page exists, false otherwise
      **/
@@ -72,12 +72,11 @@ class LandingPagesController extends Controller
     {
         return (bool) LandingPage::where('uri', $uri)->count();
     }
-
     /**
      * Gets all the data of the page from the database, based on the uri.
      *
-     * @param string $uri     the uri to search for in the database
-     * @param bool   $trashed Include trashed (soft deleted) pages?
+     * @param  string  $uri  the uri to search for in the database
+     * @param  bool  $trashed  Include trashed (soft deleted) pages?
      *
      * @return array|LandingPage|Builder
      **/
